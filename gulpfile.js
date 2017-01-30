@@ -5,6 +5,7 @@ var rename = require('gulp-rename');
 
 var config = {
     bootstrapDir: './node_modules/bootstrap',
+    jqueryDir: './node_modules/jquery',
     publicDir: './dist',
 };
 
@@ -26,4 +27,17 @@ gulp.task('fonts', function() {
     .pipe(gulp.dest(config.publicDir + '/fonts'));
 });
 
-gulp.task('default', ['css', 'fonts']);
+gulp.task('js', function() {
+    return gulp.src(config.bootstrapDir + '/dist/js/bootstrap.*')
+    .pipe(rename(function (path) {
+      path.basename = path.basename.replace('bootstrap', 'weirdx');
+    }))
+    .pipe(gulp.dest(config.publicDir + '/js'));
+});
+
+gulp.task('jquery', function() {
+    return gulp.src(config.jqueryDir + '/dist/jquery.min.js')
+    .pipe(gulp.dest(config.publicDir + '/js'));
+});
+
+gulp.task('default', ['css', 'fonts', 'js', 'jquery']);
